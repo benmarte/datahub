@@ -2,7 +2,7 @@
 version: '3.8'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.4.0
+    image: zookeeper
     env_file: zookeeper.env
     hostname: test_zookeeper
     ports:

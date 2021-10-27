@@ -12,6 +12,7 @@ version: '3.8'
 services:
   # Pre-creates the search indices using local mapping/settings.json
   elasticsearch-setup:
+    platform: linux/amd64
     image: linkedin/datahub-elasticsearch-setup:debug
     build:
       context: elasticsearch-setup
@@ -23,6 +24,7 @@ services:
       - ../metadata-service/restli-impl/src/main/resources/index/:/index
 
   kafka-setup:
+    platform: linux/amd64
     image: linkedin/datahub-kafka-setup:debug
     build:
       context: kafka-setup
@@ -31,6 +33,7 @@ services:
         APP_ENV: dev
 
   datahub-gms:
+    platform: linux/amd64
     image: linkedin/datahub-gms:debug
     build:
       context: datahub-gms
@@ -44,6 +47,7 @@ services:
       - ../metadata-service/war/build/libs/:/datahub/datahub-gms/bin
 
   datahub-frontend-react:
+    platform: linux/amd64
     image: linkedin/datahub-frontend-react:debug
     build:
       context: datahub-frontend

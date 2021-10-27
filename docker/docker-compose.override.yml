@@ -5,6 +5,7 @@ services:
   mysql:
     container_name: mysql
     hostname: mysql
+    platform: linux/amd64
     image: mysql:5.7
     env_file: mysql/env/docker.env
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
@@ -18,6 +19,7 @@ services:
     build:
       context: ../
       dockerfile: docker/mysql-setup/Dockerfile
+    platform: linux/amd64
     image: acryldata/datahub-mysql-setup:head
     env_file: mysql-setup/env/docker.env
     hostname: mysql-setup

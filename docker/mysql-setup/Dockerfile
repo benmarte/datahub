@@ -1,4 +1,4 @@
-FROM alpine:3
+FROM alpine:3.13.6
 
 ENV DOCKERIZE_VERSION v0.6.1
 RUN apk add --no-cache mysql-client curl tar \

@@ -43,7 +43,8 @@
 ---
 version: '3'
 x-airflow-common:
-  &airflow-common
+  &airflow-commo
+  platform: linux/amd64
   image: ${AIRFLOW_IMAGE_NAME:-acryldata/airflow-datahub:latest}
   environment:
     &airflow-common-env
@@ -73,6 +74,7 @@ x-airflow-common:
 
 services:
   postgres:
+    platform: linux/amd64
     image: postgres:13
     hostname: postgres
     environment:
@@ -90,6 +92,7 @@ services:
     restart: always
 
   redis:
+    platform: linux/amd64
     image: redis:latest
     hostname: redis
     ports:

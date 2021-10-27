@@ -7,7 +7,8 @@
 version: '3.8'
 services:
   zookeeper:
-    image: confluentinc/cp-zookeeper:5.4.0
+    platform: linux/amd64
+    image: zookeeper
     env_file: zookeeper/env/docker.env
     hostname: zookeeper
     container_name: zookeeper
@@ -17,6 +18,7 @@ services:
       - zkdata:/var/opt/zookeeper
 
   broker:
+    platform: linux/amd64
     image: confluentinc/cp-kafka:5.4.0
     env_file: broker/env/docker.env
     hostname: broker
@@ -31,6 +33,7 @@ services:
   kafka-setup:
     build:
       context: kafka-setup
+    platform: linux/amd64
     image: linkedin/datahub-kafka-setup:${DATAHUB_VERSION:-head}
     env_file: kafka-setup/env/docker.env
     hostname: kafka-setup
@@ -40,6 +43,7 @@ services:
       - schema-registry
 
   schema-registry:
+    platform: linux/amd64
     image: confluentinc/cp-schema-registry:5.4.0
     env_file: schema-registry/env/docker.env
     hostname: schema-registry
@@ -51,6 +55,7 @@ services:
       - "8081:8081"
 
   elasticsearch:
+    platform: linux/amd64
     image: elasticsearch:7.9.3
     env_file: elasticsearch/env/docker.env
     container_name: elasticsearch
@@ -65,7 +70,8 @@ services:
         retries: 4
 
   neo4j:
-    image: neo4j:4.0.6
+    platform: linux/amd64
+    image: neo4j/neo4j-arm64-experimental:4.3.6-arm64
     env_file: neo4j/env/docker.env
     hostname: neo4j
     container_name: neo4j
@@ -80,6 +86,7 @@ services:
     build:
       context: ../
       dockerfile: docker/elasticsearch-setup/Dockerfile
+    platform: linux/amd64
     image: linkedin/datahub-elasticsearch-setup:${DATAHUB_VERSION:-head}
     env_file: elasticsearch-setup/env/docker.env
     hostname: elasticsearch-setup
@@ -91,6 +98,7 @@ services:
     build:
         context: ../
         dockerfile: docker/datahub-gms/Dockerfile
+    platform: linux/amd64
     image: linkedin/datahub-gms:${DATAHUB_VERSION:-head}
     hostname: datahub-gms
     container_name: datahub-gms
@@ -106,6 +114,7 @@ services:
     build:
       context: ../
       dockerfile: docker/datahub-frontend/Dockerfile
+    platform: linux/amd64
     image: linkedin/datahub-frontend-react:${DATAHUB_VERSION:-head}
     env_file: datahub-frontend/env/docker.env
     hostname: datahub-frontend-react

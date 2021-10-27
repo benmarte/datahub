@@ -15,6 +15,7 @@ services:
     - KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS=0
     - KAFKA_HEAP_OPTS=-Xms256m -Xmx256m
     hostname: broker
+    platform: linux/amd64
     image: confluentinc/cp-kafka:5.4.0
     ports:
     - 29092:29092
@@ -37,6 +38,7 @@ services:
     - ELASTIC_CLIENT_HOST=elasticsearch
     - ELASTIC_CLIENT_PORT=9200
     hostname: datahub-frontend-react
+    platform: linux/amd64
     image: linkedin/datahub-frontend-react:${DATAHUB_VERSION:-head}
     ports:
     - 9002:9002
@@ -65,6 +67,7 @@ services:
     - MAE_CONSUMER_ENABLED=true
     - MCE_CONSUMER_ENABLED=true
     hostname: datahub-gms
+    platform: linux/amd64
     image: linkedin/datahub-gms:${DATAHUB_VERSION:-head}
     ports:
     - 8080:8080
@@ -82,6 +85,7 @@ services:
       - curl -sS --fail 'http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=0s'
         || exit 1
     hostname: elasticsearch
+    platform: linux/amd64
     image: elasticsearch:7.9.3
     mem_limit: 1g
     ports:
@@ -97,6 +101,7 @@ services:
     - ELASTICSEARCH_PORT=9200
     - ELASTICSEARCH_PROTOCOL=http
     hostname: elasticsearch-setup
+    platform: linux/amd64
     image: linkedin/datahub-elasticsearch-setup:${DATAHUB_VERSION:-head}
   kafka-setup:
     container_name: kafka-setup
@@ -107,6 +112,7 @@ services:
     - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
     - KAFKA_BOOTSTRAP_SERVER=broker:29092
     hostname: kafka-setup
+    platform: linux/amd64
     image: linkedin/datahub-kafka-setup:${DATAHUB_VERSION:-head}
   mysql:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
@@ -117,6 +123,7 @@ services:
     - MYSQL_PASSWORD=datahub
     - MYSQL_ROOT_PASSWORD=datahub
     hostname: mysql
+    platform: linux/amd64
     image: mysql:5.7
     ports:
     - 3306:3306
@@ -134,6 +141,7 @@ services:
     - MYSQL_PASSWORD=datahub
     - DATAHUB_DB_NAME=datahub
     hostname: mysql-setup
+    platform: linux/amd64
     image: acryldata/datahub-mysql-setup:head
   neo4j:
     container_name: neo4j
@@ -142,7 +150,8 @@ services:
     - NEO4J_dbms_default__database=graph.db
     - NEO4J_dbms_allow__upgrade=true
     hostname: neo4j
-    image: neo4j:4.0.6
+    platform: linux/amd64
+    image: neo4j/neo4j-arm64-experimental:4.3.6-arm64
     ports:
     - 7474:7474
     - 7687:7687
@@ -157,6 +166,7 @@ services:
     - SCHEMA_REGISTRY_HOST_NAME=schemaregistry
     - SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL=zookeeper:2181
     hostname: schema-registry
+    platform: linux/amd64
     image: confluentinc/cp-schema-registry:5.4.0
     ports:
     - 8081:8081
@@ -166,7 +176,8 @@ services:
     - ZOOKEEPER_CLIENT_PORT=2181
     - ZOOKEEPER_TICK_TIME=2000
     hostname: zookeeper
-    image: confluentinc/cp-zookeeper:5.4.0
+    platform: linux/amd64
+    image: zookeeper
     ports:
     - 2181:2181
     volumes:
